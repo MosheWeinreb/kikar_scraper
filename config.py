@@ -17,7 +17,4 @@ class Config:
     ARTICLE_CONTENT = ".article-content.MuiBox-root.css-1b737da"
     ARTICLE_DATE_OR_TIME = ".almoni-tzar.MuiBox-root.css-19f8y51"
     ALL_ARTICLE_HREFS = "a.text-decoration-none"
-
-    @staticmethod
-    def get_article_image_dir(article_id: str) -> str:
-        return os.path.join(Config.IMAGE_DIR, article_id)
+  
