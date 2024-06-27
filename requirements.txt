@@ -1,0 +1,11 @@
+<<<<<<< HEAD
+aiohttp
+playwright
+asyncio
+aiofiles
+=======
+playwright
+aiofiles
+tenacity
+requests
+>>>>>>> f6d9f92ab53a09e6965b58b3675d01500c264176
