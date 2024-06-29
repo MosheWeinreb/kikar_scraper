@@ -9,7 +9,7 @@ class Config:
     IMAGE_DIR = "images"
     SCREENSHOT_DIR = "screenshots"
     IMAGE_SELECTOR = "img.MuiBox-root.css-8fjtk0"
-    BUTTON_SELECTOR = (
+    AUTOHR_INFO = (
         ".MuiButtonBase-root.MuiButton-root.MuiButton-text.MuiButton-textPrimary."
         "MuiButton-sizeMedium.MuiButton-textSizeMedium.MuiButton-root.MuiButton-text."
         "MuiButton-textPrimary.MuiButton-sizeMedium.MuiButton-textSizeMedium.css-1mx6moy"
@@ -17,4 +17,6 @@ class Config:
     ARTICLE_CONTENT = ".article-content.MuiBox-root.css-1b737da"
     ARTICLE_DATE_OR_TIME = ".almoni-tzar.MuiBox-root.css-19f8y51"
     ALL_ARTICLE_HREFS = "a.text-decoration-none"
+
+    
   

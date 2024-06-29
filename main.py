@@ -59,7 +59,7 @@ class WebScraper:
 
     async def get_author_info(self, page):
         try:
-            author_element = await page.query_selector(self.config.ARTICLE_CONTENT)
+            author_element = await page.query_selector(self.config.AUTHOR_INFO)
             author_href = await author_element.get_attribute("href")
             author_text = await author_element.inner_text()
             author = {"text": author_text, "href": f"{self.config.BASE_URL}{author_href}"}
