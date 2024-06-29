@@ -3,7 +3,6 @@ import json
 from datetime import datetime
 from playwright.async_api import async_playwright, Page, Locator
 import asyncio
-from typing import Dict, Any
 import re
 import aiofiles
 import aiohttp
@@ -13,7 +12,7 @@ from config import Config
 
 class WebScraper:
     def __init__(self, config):
-        self.config = config
+        self.config = Config
 
     async def main(self):
         async with async_playwright() as p:
@@ -26,7 +25,7 @@ class WebScraper:
                 print(f"Number of articles to process: {len(hrefs_dict)}")
 
             try:
-                hrefs_list = list(hrefs_dict.values())[:5]
+                hrefs_list = list(hrefs_dict.values())[:8]
 
                 semaphore = asyncio.Semaphore(self.config.MAX_CONCURRENT_REQUESTS)
                 tasks = [self.process_article(context, href, index + 1, semaphore)
@@ -56,16 +55,22 @@ class WebScraper:
             if end_of_page:
                 break
         return all_hrefs
-
     async def get_author_info(self, page):
         try:
-            author_element = await page.query_selector(self.config.AUTHOR_INFO)
+            author_element = await page.wait_for_selector(self.config.AUTOHR_INFO)
             author_href = await author_element.get_attribute("href")
             author_text = await author_element.inner_text()
-            author = {"text": author_text, "href": f"{self.config.BASE_URL}{author_href}"}
+
+            # Combine printing and return in a single statement
+            author = {"NAME": author_text, "HREF": f"{self.config.BASE_URL}{author_href}"}
             return author
-        except Exception:
-            return {"text": "Could not get author", "href": ""}
+
+        except Exception as e:
+            print(f"Error getting author info: {e}")
+            return {"TEXT": "Could not get author", "HREF": ""}
+
+
+
 
     async def get_time_or_date_published(self, page):
         try:
@@ -151,7 +156,6 @@ class WebScraper:
         article_info = {}
         try:
             await page.goto(href)
-            await page.wait_for_selector(self.config.BUTTON_SELECTOR, timeout=5000)
             scraped_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             headline = await page.inner_text("h1")
             author = await self.get_author_info(page)
